@@ -2,16 +2,25 @@
   <div class="Accordion px-8" 
     v-if="items">
         <div class="Accordion-wrapper" v-for="item in items" v-bind:key="item.name">
-            <details class="Accordion-item" v-bind:open="item.OpenByDefault">
+            <details class="Accordion-item">
                 <summary class="Accordion-header" v-if="item.name">
                     <span>{{item.name}}</span>
                 </summary>
                 <div class="Accordion-content">
-                    <div class="flex">
-                        <img class="Accordion-image" 
-                        :src="item.image_url" 
-                        :alt="item.name" />
-                        <p v-html="item.description" />
+                    <div class="grid grid-cols-3 gap-4 lg:gap-6">
+                        <div>
+                            <img class="Accordion-image" 
+                            :src="item.image_url" 
+                            :alt="item.name" />
+                        </div>
+                        <div class="col-span-2">
+                            <p v-if="item.tagline" v-html="item.tagline" class="italic font-bold mb-4" />
+                            <p v-if="item.description" v-html="item.description" class="mb-4" />
+                            <p v-if="item.first_brewed" class="mb-4">
+                                <strong>First brewed:</strong> {{item.first_brewed}}
+                            </p>
+                            <p v-if="item.abv">{{item.abv}} ABV</p>
+                        </div>
                     </div>
                 </div>
             </details>
@@ -67,11 +76,7 @@ export default {
 
         &::-webkit-details-marker {
             display: none; // chrome
-        }
-
-        &:focus {
-            outline: none;
-        }
+        }   
 
         &:hover {
             background-color: #ffa500;
