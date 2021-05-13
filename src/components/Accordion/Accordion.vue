@@ -1,10 +1,19 @@
 <template>
-  <div class="Accordion" 
+  <div class="Accordion px-8" 
     v-if="items">
         <div class="Accordion-wrapper" v-for="item in items" v-bind:key="item.name">
             <details class="Accordion-item" v-bind:open="item.OpenByDefault">
-                <summary class="Accordion-header" v-if="item.name">{{item.name}}</summary>
-                <div class="Accordion-content" v-html="item.content" vif="item.content"></div>
+                <summary class="Accordion-header" v-if="item.name">
+                    <span>{{item.name}}</span>
+                </summary>
+                <div class="Accordion-content">
+                    <div class="flex">
+                        <img class="Accordion-image" 
+                        :src="item.image_url" 
+                        :alt="item.name" />
+                        <p v-html="item.description" />
+                    </div>
+                </div>
             </details>
             <span class="Accordion-icon"></span>
         </div>
@@ -36,7 +45,7 @@ export default {
     &-wrapper {
         position: relative;
         background-color: #fff;
-        border-radius: 10px;
+        border-radius: 35px;
 
         & + & {
             margin-top: 1rem;
@@ -45,9 +54,12 @@ export default {
 
     &-header {
         font-weight: 500;
-        padding: 2.875rem 2.5rem;
+        padding: 1.25rem 2.5rem;
         position: relative;
         list-style: none; // firefox
+        cursor: pointer;
+        border-radius: 35px;
+        transition: background-color .25s ease, border-radius .1s ease;
 
         @media screen and (min-width: 1024px) {
             font-size: 1.125rem;
@@ -59,6 +71,16 @@ export default {
 
         &:focus {
             outline: none;
+        }
+
+        &:hover {
+            background-color: #ffa500;
+            border-radius: 35px;
+        }
+
+        .Accordion-item[open] & {
+            background-color: #ffa500;
+            border-radius: 35px 35px 0 0;
         }
     }
 
@@ -81,8 +103,9 @@ export default {
         border: 2px solid #333;
         border-radius: 100%;
         position: absolute;
-        top: 44px;
-        right: 35px;
+        top: 16px;
+        right: 26px;
+        pointer-events: none;
 
         &:before, &:after {
             content: '';
@@ -108,6 +131,12 @@ export default {
                 transform: translate(-50%, -50%) rotate(0deg);
             }
         }
+    }
+
+    &-image {
+        width: 100%;
+        height: auto;
+        max-width: 300px;
     }
 }
 </style>

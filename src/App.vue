@@ -1,19 +1,53 @@
 <template>
   <div id="app">
-    <Accordion />
-    <CTA />
+    <div v-if="!loaded">
+      <p>Loading...</p>
+    </div>
+    <div v-else>
+      <Accordion :items="data" />
+      <div class="mt-8">
+        <CTA :items="data" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import Accordion from './components/Accordion/Accordion.vue'
-import CTA from './components/CTA/CTA.vue'
+import Accordion from './components/Accordion/Accordion.vue';
+import CTA from './components/CTA/CTA.vue';
+import axios from 'axios';
+import './assets/css/tailwind/tailwind.css';
 
 export default {
   name: 'App',
   components: {
     Accordion,
     CTA
+  },
+  data() {
+    return {
+      apiUrl: 'https://api.punkapi.com/v2/beers',
+      data: null,
+      loaded: false
+    }
+  },
+  beforeMount() {
+    this.fetchData(this.apiUrl);
+  },
+  methods: {
+    fetchData(url) {
+      axios.get(url)
+      .then((resp) => {
+        if(resp.data) {
+          console.log(resp.data)
+          this.data = resp.data;
+          this.loaded = true;
+        }
+      })
+      .catch((err) => {
+        console.log(`Error : ${err}`)
+        })
+      },
   }
 }
 </script>
@@ -24,7 +58,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
+  background-color: #d8d8d8;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 2.5rem 0;
 }
 </style>

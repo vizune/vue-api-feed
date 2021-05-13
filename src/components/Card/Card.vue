@@ -1,11 +1,13 @@
 <template>
-    <div class="Card u-p-4">
+    <div class="Card h-full p-4">
+      <div class="Card-image">
         <img 
         :src="imageUrl" 
         :alt="title" 
         class="w-full" />
-        <h3 class="u-font-bold u-text-lg u-mt-0" v-if="title" v-html="title" />
-        <p v-if="description" v-html="description" />
+      </div>
+      <h3 class="font-bold text-lg mt-0" v-if="title" v-html="title" />
+      <p v-if="description" v-html="description" />
     </div>
 </template>
 
@@ -47,5 +49,15 @@ export default {
     border-radius: $card-border-radius;
     overflow: hidden;
     color: #393939;
+
+    &-image {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+
+      img {
+        object-fit: cover;
+      }
+    }
 }
 </style>
