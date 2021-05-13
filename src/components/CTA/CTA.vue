@@ -22,7 +22,7 @@ export default {
         Card
     },
     props: {
-        items: Array
+        items: Array,
     }
 }
 </script>
